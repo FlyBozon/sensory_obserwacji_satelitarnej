@@ -1,0 +1,6 @@
+Wymagane jest zalozenie konta na:
+https://search.asf.alaska.edu/#/
+zdjecie 1:
+https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20160811T045259_20160811T045326_012548_013A69_24E3.zip
+zdjecie 2:
+https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20160823T045313_20160823T045340_012723_014032_AB6B.zip
