@@ -30,7 +30,8 @@ BURST_S="${BURST_S:-1}"
 if [[ "${DEM:-copernicus}" == external ]]; then
   DEMARGS=(-PdemName="External DEM" -PexternalDEM="$LAB/demTatry.tif")
 else
-  DEMARGS=(-PdemName="Copernicus 30m Global DEM" -PexternalDEM="")
+  # externalDEM jest ignorowany przy Copernicus, ale pusta sciezka moglaby nie przejsc walidacji
+  DEMARGS=(-PdemName="Copernicus 30m Global DEM" -PexternalDEM="$LAB/demTatry.tif")
 fi
 FFT="${FFT:-256}"; OKNO="${OKNO:-7}"; SUFIKS="${SUFIKS:-}"
 
@@ -51,7 +52,7 @@ gpt_run() {  # gpt_run <graf> <wynik> [parametry...]
     echo ">> pomijam $(basename "$wynik") (istnieje; FORCE=1 aby nadpisac)"; return
   fi
   echo ">> $(basename "$graf") -> $(basename "$wynik")   [$(date +%T)]"
-  time "$GPT" "$G/$graf" -c 4G -q "$(nproc)" -Poutput="$wynik" "$@"
+  time "$GPT" "$G/$graf" -c 8G -q "$(nproc)" -Poutput="$wynik" "$@"
 }
 
 krok() {
@@ -61,14 +62,15 @@ krok() {
          -Psubswath="$SUBSWATH" -PburstMaster="$BURST_M" -PburstSlave="$BURST_S" "${DEMARGS[@]}" ;;
     2) gpt_run 02_interferogram.xml "$P2" -Pinput="$P1" ;;
     3) gpt_run 03_deburst.xml "$P3" -Pinput="$P2" ;;
-    4) gpt_run 04_goldstein.xml "$P4" -Pinput="$P3" -Pfft="$FFT" -Pokno="$OKNO" ;;
+    4) gpt_run 04_goldstein.xml "$P4" -Pinput="$P3" -Pfft="$FFT" -Pokno="$OKNO" \
+         -PadaptAlpha="${ADAPT_ALPHA:-false}" ;;
     5) gpt_run 05_multilook.xml "$P5" -Pinput="$P4" -PrgLooks="${RG_LOOKS:-9}" ;;
     6) # SNAP tworzy w EXP podfolder nazwany jak produkt wejsciowy
        local exp; exp="$(snaphu_dir)"
        if ! find "$exp" -name snaphu.conf 2>/dev/null | grep -q . || [[ -n "${FORCE:-}" ]]; then
          mkdir -p "$exp"
          echo ">> 05b_snaphu_export.xml -> $exp"
-         "$GPT" "$G/05b_snaphu_export.xml" -c 4G -Pinput="$P5" -Pfolder="$exp" \
+         "$GPT" "$G/05b_snaphu_export.xml" -c 8G -Pinput="$P5" -Pfolder="$exp" \
            -Pkafle="${KAFLE:-5}" -Poverlap="${OVERLAP:-20}"
        fi
        local conf; conf="$(find "$exp" -name snaphu.conf | head -1)"

@@ -66,6 +66,10 @@ Wynik analizy: `wyniki/analiza/{statystyki.txt, mapy.png, wykresy.png, roznica_d
 
 ## Pułapki
 
+- **SNAP 14 vs instrukcja** (pisana pod starszy SNAP): nazwy menu się zgadzają, ale
+  - *Goldstein Phase Filtering* ma nową opcję **Use adaptive alpha** (domyślnie włączona) – odznacz, żeby był klasyczny filtr z α = 1 jak w instrukcji (skrypt gpt robi to domyślnie; `ADAPT_ALPHA=true` włącza);
+  - *Phase to Elevation* ma wybór metody – zostaw domyślne **DEM Seed**;
+  - *Interferogram Formation* – okno koherencji domyślnie 10×10.
 - **Nie rozpakowuj .zip** – SNAP czyta je bezpośrednio.
 - Pierwsze uruchomienie pobiera orbity precyzyjne i kafle Copernicus DEM – potrzebny internet.
 - Snaphu Export: ścieżkę folderu **wpisz ręcznie**, a snaphu uruchamiaj w podfolderze nazwanym jak produkt.

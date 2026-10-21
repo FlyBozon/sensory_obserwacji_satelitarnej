@@ -13,7 +13,7 @@
       <srpNumberPoints>501</srpNumberPoints>
       <orbitDegree>3</orbitDegree>
       <includeCoherence>true</includeCoherence>
-      <cohWinAz>3</cohWinAz>
+      <cohWinAz>10</cohWinAz>
       <cohWinRg>10</cohWinRg>
       <squarePixel>true</squarePixel>
       <subtractTopographicPhase>false</subtractTopographicPhase>

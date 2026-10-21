@@ -9,6 +9,7 @@
     <sources><sourceProduct refid="Read"/></sources>
     <parameters>
       <alpha>1.0</alpha>
+      <useAdaptiveAlpha>${adaptAlpha}</useAdaptiveAlpha>
       <FFTSizeString>${fft}</FFTSizeString>
       <windowSizeString>${okno}</windowSizeString>
       <useCoherenceMask>false</useCoherenceMask>
