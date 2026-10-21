@@ -1,0 +1,17 @@
+<graph id="Deburst">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <parameters><file>${input}</file></parameters>
+  </node>
+  <node id="TOPSAR-Deburst">
+    <operator>TOPSAR-Deburst</operator>
+    <sources><sourceProduct refid="Read"/></sources>
+    <parameters><selectedPolarisations>VV</selectedPolarisations></parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="TOPSAR-Deburst"/></sources>
+    <parameters><file>${output}</file><formatName>BEAM-DIMAP</formatName></parameters>
+  </node>
+</graph>

@@ -1,0 +1,7 @@
+# duze dane wejsciowe i wyniki przetwarzania (kilka-kilkanascie GB)
+dane/*.zip
+dane/*.SAFE/
+wyniki/
+*.aux.xml
+# obiekty kompilacji snaphu
+snaphu_build/**/*.o

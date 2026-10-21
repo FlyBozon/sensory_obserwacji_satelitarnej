@@ -1,0 +1,24 @@
+<graph id="SnaphuImport">
+  <version>1.0</version>
+  <node id="Read-Phase">
+    <operator>Read</operator>
+    <parameters><file>${input}</file></parameters>
+  </node>
+  <node id="Read-Unwrapped-Phase">
+    <operator>Read</operator>
+    <parameters><file>${unwHdr}</file></parameters>
+  </node>
+  <node id="SnaphuImport">
+    <operator>SnaphuImport</operator>
+    <sources>
+      <sourceProduct refid="Read-Phase"/>
+      <sourceProduct.1 refid="Read-Unwrapped-Phase"/>
+    </sources>
+    <parameters><doNotKeepWrapped>false</doNotKeepWrapped></parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="SnaphuImport"/></sources>
+    <parameters><file>${output}</file><formatName>BEAM-DIMAP</formatName></parameters>
+  </node>
+</graph>

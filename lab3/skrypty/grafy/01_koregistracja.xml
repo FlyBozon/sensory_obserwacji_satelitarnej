@@ -1,0 +1,75 @@
+<graph id="S1_TOPS_Coregistration">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <parameters><file>${master}</file></parameters>
+  </node>
+  <node id="Read(2)">
+    <operator>Read</operator>
+    <parameters><file>${slave}</file></parameters>
+  </node>
+  <node id="TOPSAR-Split">
+    <operator>TOPSAR-Split</operator>
+    <sources><sourceProduct refid="Read"/></sources>
+    <parameters>
+      <subswath>${subswath}</subswath>
+      <selectedPolarisations>VV</selectedPolarisations>
+      <firstBurstIndex>${burstMaster}</firstBurstIndex>
+      <lastBurstIndex>${burstMaster}</lastBurstIndex>
+    </parameters>
+  </node>
+  <node id="TOPSAR-Split(2)">
+    <operator>TOPSAR-Split</operator>
+    <sources><sourceProduct refid="Read(2)"/></sources>
+    <parameters>
+      <subswath>${subswath}</subswath>
+      <selectedPolarisations>VV</selectedPolarisations>
+      <firstBurstIndex>${burstSlave}</firstBurstIndex>
+      <lastBurstIndex>${burstSlave}</lastBurstIndex>
+    </parameters>
+  </node>
+  <node id="Apply-Orbit-File">
+    <operator>Apply-Orbit-File</operator>
+    <sources><sourceProduct refid="TOPSAR-Split"/></sources>
+    <parameters>
+      <orbitType>Sentinel Precise (Auto Download)</orbitType>
+      <polyDegree>3</polyDegree>
+      <continueOnFail>false</continueOnFail>
+    </parameters>
+  </node>
+  <node id="Apply-Orbit-File(2)">
+    <operator>Apply-Orbit-File</operator>
+    <sources><sourceProduct refid="TOPSAR-Split(2)"/></sources>
+    <parameters>
+      <orbitType>Sentinel Precise (Auto Download)</orbitType>
+      <polyDegree>3</polyDegree>
+      <continueOnFail>false</continueOnFail>
+    </parameters>
+  </node>
+  <node id="Back-Geocoding">
+    <operator>Back-Geocoding</operator>
+    <sources>
+      <sourceProduct refid="Apply-Orbit-File"/>
+      <sourceProduct.1 refid="Apply-Orbit-File(2)"/>
+    </sources>
+    <parameters>
+      <demName>${demName}</demName>
+      <externalDEMFile>${externalDEM}</externalDEMFile>
+      <externalDEMNoDataValue>0.0</externalDEMNoDataValue>
+      <demResamplingMethod>BICUBIC_INTERPOLATION</demResamplingMethod>
+      <resamplingType>BISINC_5_POINT_INTERPOLATION</resamplingType>
+      <maskOutAreaWithoutElevation>true</maskOutAreaWithoutElevation>
+      <outputRangeAzimuthOffset>false</outputRangeAzimuthOffset>
+      <outputDerampDemodPhase>false</outputDerampDemodPhase>
+      <disableReramp>false</disableReramp>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="Back-Geocoding"/></sources>
+    <parameters>
+      <file>${output}</file>
+      <formatName>BEAM-DIMAP</formatName>
+    </parameters>
+  </node>
+</graph>

@@ -1,0 +1,23 @@
+<graph id="Goldstein">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <parameters><file>${input}</file></parameters>
+  </node>
+  <node id="GoldsteinPhaseFiltering">
+    <operator>GoldsteinPhaseFiltering</operator>
+    <sources><sourceProduct refid="Read"/></sources>
+    <parameters>
+      <alpha>1.0</alpha>
+      <FFTSizeString>${fft}</FFTSizeString>
+      <windowSizeString>${okno}</windowSizeString>
+      <useCoherenceMask>false</useCoherenceMask>
+      <coherenceThreshold>0.2</coherenceThreshold>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="GoldsteinPhaseFiltering"/></sources>
+    <parameters><file>${output}</file><formatName>BEAM-DIMAP</formatName></parameters>
+  </node>
+</graph>

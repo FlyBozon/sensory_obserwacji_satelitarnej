@@ -1,0 +1,22 @@
+<graph id="SnaphuExport">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <parameters><file>${input}</file></parameters>
+  </node>
+  <node id="SnaphuExport">
+    <operator>SnaphuExport</operator>
+    <sources><sourceProduct refid="Read"/></sources>
+    <parameters>
+      <targetFolder>${folder}</targetFolder>
+      <statCostMode>TOPO</statCostMode>
+      <initMethod>MCF</initMethod>
+      <numberOfTileRows>${kafle}</numberOfTileRows>
+      <numberOfTileCols>${kafle}</numberOfTileCols>
+      <numberOfProcessors>4</numberOfProcessors>
+      <rowOverlap>${overlap}</rowOverlap>
+      <colOverlap>${overlap}</colOverlap>
+      <tileCostThreshold>500</tileCostThreshold>
+    </parameters>
+  </node>
+</graph>

@@ -1,0 +1,22 @@
+<graph id="Multilook">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <parameters><file>${input}</file></parameters>
+  </node>
+  <node id="Multilook">
+    <operator>Multilook</operator>
+    <sources><sourceProduct refid="Read"/></sources>
+    <parameters>
+      <nRgLooks>${rgLooks}</nRgLooks>
+      <nAzLooks>2</nAzLooks>
+      <outputIntensity>false</outputIntensity>
+      <grSquarePixel>true</grSquarePixel>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources><sourceProduct refid="Multilook"/></sources>
+    <parameters><file>${output}</file><formatName>BEAM-DIMAP</formatName></parameters>
+  </node>
+</graph>
